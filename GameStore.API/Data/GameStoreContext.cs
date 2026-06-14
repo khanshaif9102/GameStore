@@ -8,5 +8,6 @@ namespace GameStore.API.Data
         public DbSet<Game> Games => Set<Game>();
         public DbSet<Genre> Genres => Set<Genre>();
 
+
     }
 }
