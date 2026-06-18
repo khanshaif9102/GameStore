@@ -7,7 +7,7 @@ A modern RESTful API designed to manage a digital video game storefront. This ba
 *   **Minimal APIs:** Utilizes lightweight and fast endpoint routing (`GamesEndpoints.cs`) for handling HTTP requests[cite: 1].
 *   **Entity Framework Core:** Robust data access and database management using EF Core (`GameStoreContext.cs`)[cite: 1].
 *   **Local SQLite Database:** Configured out-of-the-box with a local SQLite database (`GameStore.db`) for rapid development and testing[cite: 1].
-*   **Data Transfer Objects (DTOs):** Enforces clean architecture by using DTOs (`CreateGameDto`, `GameDto`, `UpdateGameDto`) to separate domain models from API contracts[cite: 1].
+*   **Data Transfer Objects (DTOs):** Enforces clean architecture by using DTOs (`CreateGameDto`, `GameSummaryDto`, `UpdateGameDto`) to separate domain models from API contracts[cite: 1].
 *   **Direct API Testing:** Includes a `games.http` file, allowing you to execute and test REST endpoints directly within your IDE[cite: 1].
 *   **Database Migrations:** Includes pre-configured EF Core migrations to easily build and update the database schema[cite: 1].
 
