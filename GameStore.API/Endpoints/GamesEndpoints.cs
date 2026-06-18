@@ -1,4 +1,6 @@
-﻿using GameStore.API.Dtos;
+﻿using GameStore.API.Data;
+using GameStore.API.Dtos;
+using GameStore.API.Models;
 
 namespace GameStore.API.Endpoints
 {
@@ -55,18 +57,27 @@ new(15, "Super Metroid", "Action-Adventure", 19.99M, new DateOnly(1994, 3, 19))
             }).WithName(GetGameEndpointName);
 
             //POST /games
-            group.MapPost("/", (CreateGameDto newGame) =>
+            group.MapPost("/", (CreateGameDto newGame,GameStoreContext dbContext) =>
             {
 
-                GameDto g = new(
-                  games.Count + 1,
-                  newGame.Name,
-                  newGame.Genre,
-                  newGame.Price,
-                  newGame.ReleaseDate
-                );
-                games.Add(g);
-                return Results.CreatedAtRoute(GetGameEndpointName, new { id = g.Id }, g);
+                Game game = new()
+                {
+                    Name = newGame.Name,
+                    GenreId = newGame.GenreId,
+                    Price = newGame.Price,
+                    ReleaseDate = newGame.ReleaseDate,
+                };
+                
+                dbContext.Games.Add(game);
+                dbContext.SaveChanges();
+
+                GameDetailsDto gameDetailsDto = new(  game.Id,
+                    game.Name,
+                    game.GenreId,
+                   game.Price,
+                   game.ReleaseDate);
+
+                return Results.CreatedAtRoute(GetGameEndpointName, new { id = gameDetailsDto.Id }, gameDetailsDto);
             });
 
             //PUT /games/{id}
