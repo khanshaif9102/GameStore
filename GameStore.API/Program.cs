@@ -11,10 +11,12 @@ builder.Services.AddValidation();
 
 builder.AddGameStoreDv();
 
+
 var app = builder.Build();
 
 
 app.MapGamesEndpoints();
+app.MapGenresEndpoints();
 
 app.MigrateDb();
 
