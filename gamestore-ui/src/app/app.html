@@ -1,0 +1,112 @@
+<div class="container">
+  <h1>🎮 GameStore</h1>
+
+  <div *ngIf="successMessage" class="success-msg">
+    ✅ {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage" class="error-msg">
+    ❌ {{ errorMessage }}
+  </div>
+
+  <div class="header">
+    <button *ngIf="!showForm" (click)="openCreateForm()" class="btn btn-primary">
+      ➕ Add New Game
+    </button>
+  </div>
+
+  <div *ngIf="showForm" class="form">
+    <h2>{{ isEditMode ? '✏️ Edit Game' : '🆕 Add New Game' }}</h2>
+    <form (ngSubmit)="submitForm()">
+      <div class="form-group">
+        <label>Game Name</label>
+        <input 
+          type="text" 
+          [(ngModel)]="formData.name" 
+          name="name"
+          placeholder="Enter game name" 
+          required 
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Genre</label>
+        <select [(ngModel)]="formData.genreId" name="genreId" required>
+          <option value="0">Select a genre</option>
+          <option *ngFor="let genre of genres" [value]="genre.id">{{ genre.name }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Price ($)</label>
+        <input 
+          type="number" 
+          [(ngModel)]="formData.price" 
+          name="price"
+          placeholder="Enter price" 
+          step="0.01"
+          required 
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Release Date</label>
+        <input 
+          type="date" 
+          [(ngModel)]="formData.releaseDate" 
+          name="releaseDate" 
+          required 
+        />
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-success">
+          {{ isEditMode ? '💾 Update' : '➕ Create' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="closeForm()">
+          ❌ Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="games-section">
+    <h2>Games Library ({{ games.length }})</h2>
+
+    <div *ngIf="games.length > 0" class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Genre</th>
+            <th>Price</th>
+            <th>Release Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let game of games">
+            <td>#{{ game.id }}</td>
+            <td>{{ game.name }}</td>
+            <td>{{ game.genre }}</td>
+            <td>${{ game.price.toFixed(2) }}</td>
+            <td>{{ game.releaseDate }}</td>
+            <td class="actions">
+              <button class="btn btn-sm btn-edit" (click)="openEditForm(game)">
+                ✏️ Edit
+              </button>
+              <button class="btn btn-sm btn-delete" (click)="deleteGame(game.id)">
+                🗑️ Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p *ngIf="games.length === 0" class="no-data">
+      📭 No games found. Click 'Add New Game' to create one!
+    </p>
+  </div>
+</div>

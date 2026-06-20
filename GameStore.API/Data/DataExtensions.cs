@@ -17,8 +17,7 @@ namespace GameStore.API.Data
         {
             var connString = builder.Configuration.GetConnectionString("GameStore");
 
-            
-
+            builder.Services.AddSqlite<GameStoreContext>(connString);
             builder.Services.AddSqlite<GameStoreContext>(connString, optionsAction: options => options.UseSeeding((context, _) =>
             {
                 if (!context.Set<Genre>().Any())

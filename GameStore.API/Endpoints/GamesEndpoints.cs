@@ -15,9 +15,8 @@ namespace GameStore.API.Endpoints
 
             //GET /games
             group.MapGet("/", async (GameStoreContext dbContext) =>
-            
                 await dbContext.Games.Include(game=>game.Genre).Select(game => new GameSummaryDto(game.Id,game.Name,game.Genre!.Name,game.Price,game.ReleaseDate)).AsNoTracking().ToListAsync()
-           );
+            );
 
 
 
